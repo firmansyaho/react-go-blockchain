@@ -13,7 +13,7 @@ const SendTransaction = ({ show, handleClose, handleSave, name, amount, setName,
           <form>
             <div className="mb-3">
               <label htmlFor="exampleInputName" className="form-label">
-                Name
+                Receiver Name
               </label>
               <input
                 type="text"
