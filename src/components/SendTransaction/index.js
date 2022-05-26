@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 
-const PopupCreateChain = ({ show, handleClose, handleSave, name, amount, setName, setAmount }) => {
+const SendTransaction = ({ show, handleClose, handleSave, name, amount, setName, setAmount }) => {
 
   return (
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Create A Chain</Modal.Title>
+          <Modal.Title>Transaction</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form>
@@ -26,7 +26,7 @@ const PopupCreateChain = ({ show, handleClose, handleSave, name, amount, setName
             </div>
             <div className="mb-3">
               <label htmlFor="exampleInputAmount" className="form-label">
-                Initial Amount
+                Amount
               </label>
               <input
                 type="number"
@@ -43,7 +43,7 @@ const PopupCreateChain = ({ show, handleClose, handleSave, name, amount, setName
             Close
           </Button>
           <Button variant="primary" onClick={handleSave}>
-            Save
+            Send
           </Button>
         </Modal.Footer>
       </Modal>
@@ -51,4 +51,4 @@ const PopupCreateChain = ({ show, handleClose, handleSave, name, amount, setName
   );
 };
 
-export default PopupCreateChain;
+export default SendTransaction;
