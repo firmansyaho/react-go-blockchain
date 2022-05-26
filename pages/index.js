@@ -1,24 +1,20 @@
-import axios from "axios";
-
 import { useEffect, useState } from "react";
+import axios from "axios";
 import { Card, Col, Container, Nav, Navbar, Row } from "react-bootstrap";
+
+import { HASH_BLOCK_URL } from "../src/common/constant";
 import Popup from "../src/components/Popup";
 import PopupCreateChain from "../src/components/PopupCreateChain";
 
 export default function Home() {
   const [showAddBlock, setShowAddBlock] = useState(false);
-  const [showAddAChain, setShowAddAChain] = useState(false);
   const [toTransactions, setToTransactions] = useState(false);
   const [data, setData] = useState();
 
-  const [name, setName] = useState("");
-  const [amount, setAmount] = useState();
-
-  console.log("name amount", name, amount);
   const getBlocks = async () => {
     setToTransactions(false);
     try {
-      const resp = await axios.get("http://localhost:8080/getblocks");
+      const resp = await axios.get(`${HASH_BLOCK_URL}/getblocks`);
       console.log("data resp", resp.data);
       if (resp) {
         setData(resp.data);
@@ -32,7 +28,7 @@ export default function Home() {
     setToTransactions(false);
 
     try {
-      const resp = await axios.get("http://localhost:8080/viewCurrentBlock");
+      const resp = await axios.get(`${HASH_BLOCK_URL}/viewCurrentBlock`);
       console.log("data resp", resp.data);
       if (resp) {
         setData(resp.data);
@@ -45,27 +41,11 @@ export default function Home() {
   const addNewBlocks = async () => {
     setToTransactions(false);
     try {
-      const resp = await axios.post("http://localhost:8080/addblock?data=New");
+      const resp = await axios.post(`${HASH_BLOCK_URL}/addblock?data=New`);
       console.log("data resp", resp.data);
       if (resp) {
         getBlocks();
         setShowAddBlock(false);
-      }
-    } catch (err) {
-      console.log("data err", err);
-    }
-  };
-
-  const addAChain = async () => {
-    try {
-      const resp = await axios.post(
-        `http://localhost:8081/createBlockChain?data=${name}&amount=${amount}`
-      );
-      console.log("data resp", resp.data);
-      if (resp) {
-        getBlocks();
-        setShowAddAChain(false);
-        setToTransactions(true);
       }
     } catch (err) {
       console.log("data err", err);
@@ -80,7 +60,7 @@ export default function Home() {
     <>
       <Navbar bg="primary" variant="dark">
         <Container>
-          <Navbar.Brand href="#home">GO-Blockchain</Navbar.Brand>
+          <Navbar.Brand href="#home">Go-Blockchain</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link
               onClick={getBlocks}
@@ -106,10 +86,7 @@ export default function Home() {
               Current/Last Block
             </Nav.Link>
             <Nav.Link
-              onClick={() => {
-                setShowAddAChain(true);
-              }}
-              href="#current-block"
+              href="/transaction"
               style={{ marginLeft: 200 }}
             >
               Transactions
@@ -165,15 +142,6 @@ export default function Home() {
         show={showAddBlock}
         handleClose={() => setShowAddBlock(false)}
         handleSave={addNewBlocks}
-      />
-      <PopupCreateChain
-        show={showAddAChain}
-        handleClose={() => setShowAddAChain(false)}
-        handleSave={addAChain}
-        name={name}
-        amount={amount}
-        setName={setName}
-        setAmount={setAmount}
       />
     </>
   );
