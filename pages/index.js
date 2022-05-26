@@ -29,9 +29,10 @@ export default function Home() {
 
     try {
       const resp = await axios.get(`${HASH_BLOCK_URL}/viewCurrentBlock`);
-      console.log("data resp", resp.data);
       if (resp) {
-        setData(resp.data);
+        const ddata = [];
+        ddata.push(resp.data);
+        setData(ddata);
       }
     } catch (err) {
       console.log("data err", err);
@@ -85,18 +86,14 @@ export default function Home() {
             >
               Current/Last Block
             </Nav.Link>
-            <Nav.Link
-              href="/transaction"
-              style={{ marginLeft: 200 }}
-            >
+            <Nav.Link href="/transaction" style={{ marginLeft: 200 }}>
               Transactions
             </Nav.Link>
           </Nav>
         </Container>
       </Navbar>
       {toTransactions ? (
-        <>
-        </>
+        <></>
       ) : (
         <Row style={{ margin: 10 }}>
           {data &&
