@@ -7,7 +7,7 @@ const PopupCreateChain = ({ show, handleClose, handleSave, name, amount, setName
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Create A Chain</Modal.Title>
+          <Modal.Title>Create a new Wallet</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form>
