@@ -5,12 +5,19 @@ import { Card, Col, Container, Nav, Navbar, Row } from "react-bootstrap";
 import { HASH_BLOCK_URL } from "../src/common/constant";
 import Popup from "../src/components/Popup";
 import PopupCreateChain from "../src/components/PopupCreateChain";
+import { useRouter } from "next/router";
 
 export default function Home() {
   const [showAddBlock, setShowAddBlock] = useState(false);
   const [toTransactions, setToTransactions] = useState(false);
   const [data, setData] = useState();
+  const router = useRouter();
 
+  useEffect(() => {
+    router.push("/transaction")
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  
   const getBlocks = async () => {
     setToTransactions(false);
     try {

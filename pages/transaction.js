@@ -51,7 +51,7 @@ const Transaction = () => {
   const addAChain = async () => {
     try {
       const resp = await axios.post(
-        `${TRANSACTION_URL}/createblockChain?data=${name}&amount=${amount}`
+        `${TRANSACTION_URL}/createblockchain?data=${name}&amount=${amount}`
       );
       if (resp) {
         localStorage.setItem("userName", name);
@@ -112,6 +112,15 @@ const Transaction = () => {
               }}
             >
               Create a transaction
+            </Nav.Link>
+            <Nav.Link
+              href="#"
+              style={{ marginLeft: 20 }}
+              onClick={() => {
+                setGoCreateChain(true);
+              }}
+            >
+              Create a Blockchain
             </Nav.Link>
           </Nav>
           <Navbar.Collapse className="justify-content-end">
