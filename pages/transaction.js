@@ -33,7 +33,7 @@ const Transaction = () => {
 
   const getTransactions = async () => {
     try {
-      const resp = await axios.get(`${TRANSACTION_URL}/printchain`);
+      const resp = await axios.get(`${TRANSACTION_URL}/printChain`);
       console.log("data resp get tran", resp.data.Message);
       if (resp) {
         if (resp.data.Message === "No existing blockchain found, create one!") {
@@ -51,7 +51,7 @@ const Transaction = () => {
   const addAChain = async () => {
     try {
       const resp = await axios.post(
-        `${TRANSACTION_URL}/createblockchain?data=${name}&amount=${amount}`
+        `${TRANSACTION_URL}/createBlockChain?data=${name}&amount=${amount}`
       );
       if (resp) {
         localStorage.setItem("userName", name);
@@ -68,7 +68,7 @@ const Transaction = () => {
   const addTransaction = async () => {
     try {
       const resp = await axios.post(
-        `${TRANSACTION_URL}/sendtransaction?from=${name}&to=${toName}&amount=${toAmount}`
+        `${TRANSACTION_URL}/sendTransaction?from=${name}&to=${toName}&amount=${toAmount}`
       );
       if (resp) {
         console.log("data resp add tra", resp.data);
@@ -83,7 +83,7 @@ const Transaction = () => {
 
   const getBalance = async () => {
     try {
-      const resp = await axios.get(`${TRANSACTION_URL}/getbalance/${name}`);
+      const resp = await axios.get(`${TRANSACTION_URL}/getBalance/${name}`);
       console.log("data resp balce", resp.data.Message);
       if (resp) {
         setBalance(resp.data.Message);
