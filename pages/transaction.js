@@ -6,6 +6,7 @@ import { TRANSACTION_URL } from "../src/common/constant";
 import PopupCreateChain from "../src/components/PopupCreateChain";
 import SendTransaction from "../src/components/SendTransaction";
 import transactionMock from "../src/mocks/transaction.json";
+import MultipleRequest from "../src/components/MultipleRequests";
 
 const Transaction = () => {
   const [name, setName] = useState("");
@@ -16,7 +17,8 @@ const Transaction = () => {
   const [showAddAChain, setShowAddAChain] = useState(false);
   const [showTransaction, setShowTransaction] = useState(false);
   const [goCreateChain, setGoCreateChain] = useState(false);
-  const [transactions, setTransactions] = useState();
+  const [transactions, setTransactions] = useState(false);
+  const [showMultiple, setShowMultiple] = useState(false);
 
   useEffect(() => {
     if (!localStorage.getItem("userName")) {
@@ -28,8 +30,11 @@ const Transaction = () => {
   }, []);
 
   useEffect(() => {
-    getBalance();
-  }, [transactions]);
+    if (name) {
+      getBalance();
+    }
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transactions, name]);
 
   const getTransactions = async () => {
     try {
@@ -84,9 +89,9 @@ const Transaction = () => {
   const getBalance = async () => {
     try {
       const resp = await axios.get(`${TRANSACTION_URL}/getBalance/${name}`);
-      console.log("data resp balce", resp.data.Message);
+      console.log("data resp balce", resp.data);
       if (resp) {
-        setBalance(resp.data.Message);
+        setBalance(resp.data.Balance);
       }
     } catch (err) {
       console.log("data err balce", err);
@@ -121,6 +126,15 @@ const Transaction = () => {
               }}
             >
               Create a Blockchain
+            </Nav.Link>
+            <Nav.Link
+              href="#"
+              style={{ marginLeft: 20 }}
+              onClick={() => {
+                setShowMultiple(true);
+              }}
+            >
+              Multiple API Request
             </Nav.Link>
           </Nav>
           <Navbar.Collapse className="justify-content-end">
@@ -164,6 +178,11 @@ const Transaction = () => {
         amount={toAmount}
         setName={setToName}
         setAmount={setToAmount}
+      />
+      <MultipleRequest
+        show={showMultiple}
+        handleClose={() => setShowMultiple(false)}
+        handleSave={() => setShowMultiple(false)}
       />
     </>
   );
