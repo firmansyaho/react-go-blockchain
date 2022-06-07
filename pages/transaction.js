@@ -13,7 +13,7 @@ const Transaction = () => {
   const [amount, setAmount] = useState();
   const [toName, setToName] = useState("");
   const [toAmount, setToAmount] = useState();
-  const [balance, setBalance] = useState("Balance is");
+  const [balance, setBalance] = useState("");
   const [showAddAChain, setShowAddAChain] = useState(false);
   const [showTransaction, setShowTransaction] = useState(false);
   const [goCreateChain, setGoCreateChain] = useState(false);
@@ -139,7 +139,7 @@ const Transaction = () => {
           </Nav>
           <Navbar.Collapse className="justify-content-end">
             <Navbar.Text>
-              <b>({name})</b> {balance}
+              <b>({name})</b> {balance ? `Balance is ${balance}` : ""}
             </Navbar.Text>
           </Navbar.Collapse>
         </Container>
