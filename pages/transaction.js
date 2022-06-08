@@ -6,6 +6,7 @@ import { TRANSACTION_URL } from "../src/common/constant";
 import PopupCreateChain from "../src/components/PopupCreateChain";
 import SendTransaction from "../src/components/SendTransaction";
 import MultipleRequest from "../src/components/MultipleRequests";
+import CheckBalance from "../src/components/CheckBalance";
 
 const Transaction = () => {
   const [name, setName] = useState("");
@@ -20,6 +21,7 @@ const Transaction = () => {
   const [showMultiple, setShowMultiple] = useState(false);
   const [errorCounter, setErrorCounter] = useState(0);
   const [successCounter, setSuccessCounter] = useState(0);
+  const [showCheckBalance, setShowCheckBalance] = useState(false)
 
   useEffect(() => {
     if (!localStorage.getItem("userName")) {
@@ -132,6 +134,15 @@ const Transaction = () => {
               href="#"
               style={{ marginLeft: 20 }}
               onClick={() => {
+                setShowCheckBalance(true);
+              }}
+            >
+              Balance Checker
+            </Nav.Link>
+            <Nav.Link
+              href="#"
+              style={{ marginLeft: 20 }}
+              onClick={() => {
                 setShowMultiple(true);
               }}
             >
@@ -189,6 +200,11 @@ const Transaction = () => {
         errorCounter
         setSuccessCounter={setSuccessCounter}
         successCounter
+      />
+      <CheckBalance
+        show={showCheckBalance}
+        handleClose={() => setShowCheckBalance(false)}
+        handleSave={() => setShowCheckBalance(false)}
       />
     </>
   );
