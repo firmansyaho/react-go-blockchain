@@ -1,29 +1,43 @@
 import React, { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import axios from 'axios';
+import axios from "axios";
 import { TRANSACTION_URL } from "../../common/constant";
 
-const MultipleRequest = ({ show, handleClose, handleSave, name, amount, setName, setAmount }) => {
-  const [requestCount, setRequestCount] = useState('');
+const MultipleRequest = ({
+  show,
+  handleClose,
+  handleSave,
+  setErrorCounter,
+  errorCounter,
+  setSuccessCounter,
+  successCounter,
+}) => {
+  const [requestCount, setRequestCount] = useState("");
+
   const handleSubmit = async () => {
+    setErrorCounter(0);
+    setSuccessCounter(0);
     let request = [];
     if (requestCount) {
       for (let i = 0; i < Number(requestCount); i++) {
-        request.push(getTransactions)
+        request.push(getTransactions);
       }
     }
 
-    await Promise.all(request.map(async (funct) => {
-      funct()
-    }))
+    await Promise.all(
+      request.map(async (funct) => {
+        funct();
+      })
+    );
     handleSave();
-  }
+  };
 
   const getTransactions = async () => {
     try {
       const resp = await axios.get(`${TRANSACTION_URL}/printChain`);
       console.log("data resp get tran", resp.data.Message);
       if (resp) {
+        setSuccessCounter(successCounter++);
         if (resp.data.Message === "No existing blockchain found, create one!") {
           // setGoCreateChain(true);
         } else {
@@ -32,6 +46,7 @@ const MultipleRequest = ({ show, handleClose, handleSave, name, amount, setName,
         }
       }
     } catch (err) {
+      setErrorCounter(errorCounter++);
       console.log("data err get trab", err);
     }
   };
@@ -54,7 +69,7 @@ const MultipleRequest = ({ show, handleClose, handleSave, name, amount, setName,
                 id="exampleInputName"
                 aria-describedby="requestCount"
                 value={requestCount}
-                onChange={(e) => setRequestCount(e.target.value) }
+                onChange={(e) => setRequestCount(e.target.value)}
               />
             </div>
             {/* <div className="mb-3">

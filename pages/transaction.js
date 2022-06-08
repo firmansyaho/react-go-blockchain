@@ -5,7 +5,6 @@ import axios from "axios";
 import { TRANSACTION_URL } from "../src/common/constant";
 import PopupCreateChain from "../src/components/PopupCreateChain";
 import SendTransaction from "../src/components/SendTransaction";
-import transactionMock from "../src/mocks/transaction.json";
 import MultipleRequest from "../src/components/MultipleRequests";
 
 const Transaction = () => {
@@ -19,6 +18,8 @@ const Transaction = () => {
   const [goCreateChain, setGoCreateChain] = useState(false);
   const [transactions, setTransactions] = useState(false);
   const [showMultiple, setShowMultiple] = useState(false);
+  const [errorCounter, setErrorCounter] = useState(0);
+  const [successCounter, setSuccessCounter] = useState(0);
 
   useEffect(() => {
     if (!localStorage.getItem("userName")) {
@@ -33,7 +34,7 @@ const Transaction = () => {
     if (name) {
       getBalance();
     }
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [transactions, name]);
 
   const getTransactions = async () => {
@@ -134,7 +135,8 @@ const Transaction = () => {
                 setShowMultiple(true);
               }}
             >
-              Multiple API Request
+              Multiple API Request (success {successCounter}) (err{" "}
+              {errorCounter})
             </Nav.Link>
           </Nav>
           <Navbar.Collapse className="justify-content-end">
@@ -183,6 +185,10 @@ const Transaction = () => {
         show={showMultiple}
         handleClose={() => setShowMultiple(false)}
         handleSave={() => setShowMultiple(false)}
+        setErrorCounter={setErrorCounter}
+        errorCounter
+        setSuccessCounter={setSuccessCounter}
+        successCounter
       />
     </>
   );
